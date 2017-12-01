@@ -1,7 +1,13 @@
 package pkgLibrary;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -15,6 +21,7 @@ public class Book {
 	private double price;
 	private Date publish_date;
 	private String description;
+	private double cost;
 
 	public Book() {
 
@@ -30,10 +37,36 @@ public class Book {
 		this.price = price;
 		this.publish_date = publish_date;
 		this.description = description;
+		this.cost = .8 * this.price;
 	}
 	
- 
+	public static Book getBook(Catalog cat, String ID) throws BookException {
+		ArrayList<Book> books = cat.getBooks();
 
+		for (Book b : books) {
+			if (b.getId() == ID) {
+				return b;
+			}
+		}
+		
+		throw new BookException("Book is not found! Try again!");
+		
+
+	}
+
+	public static void addBook(Catalog cat,  Book newBook) throws BookException {
+
+		
+		for (Book b: cat.getBooks())
+		{
+			if (b.getId() == newBook.getId())
+			{
+				throw new BookException("Book already existed!");
+			}
+		}
+		
+		cat.getBooks().add(newBook);
+		}
 	public String getId() {
 		return id;
 	}
@@ -97,7 +130,17 @@ public class Book {
 		this.description = description;
 	}
 
-	
+	public double getCost() {
+		return cost;
+	}
+
+	@XmlElement
+	public void setCost(double cost) {
+		this.cost = cost;
+	}
+
+
+
 	
 
 }

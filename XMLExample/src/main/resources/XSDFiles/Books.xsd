@@ -10,6 +10,7 @@
 							</xsd:element>
 							<xsd:element name="title" type="xsd:string" />
 							<xsd:element name="genre" type="xsd:string" />
+							<xsd:element name="cost" type="xsd:double" />
 							<xsd:element name="price">
 								<xsd:simpleType>
 									<xsd:restriction
